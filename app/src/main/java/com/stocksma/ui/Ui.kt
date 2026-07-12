@@ -40,6 +40,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -276,7 +277,7 @@ fun DetailScreen(vm: AppViewModel, inst: Instrument, onBack: (() -> Unit)?) {
     var windowText by remember(inst.id) { mutableStateOf(inst.smaWindow.toString()) }
     var thresholdText by remember(inst.id) { mutableStateOf(inst.thresholdPct.toString()) }
     var seedText by remember(inst.id) { mutableStateOf(inst.seedValue?.toString() ?: "") }
-    var horizon by remember(inst.id) { mutableStateOf(maxOf(inst.smaWindow, 90)) }
+    var horizon by remember(inst.id) { mutableStateOf(maxOf(inst.smaWindow, 90).coerceIn(7, 365)) }
 
     Scaffold(topBar = {
         TopAppBar(
@@ -297,6 +298,12 @@ fun DetailScreen(vm: AppViewModel, inst: Instrument, onBack: (() -> Unit)?) {
         ) {
             Text(inst.name, style = MaterialTheme.typography.bodyMedium)
             Spacer(Modifier.height(8.dp))
+            Text("Chart horizon: $horizon days", style = MaterialTheme.typography.labelMedium)
+            Slider(
+                value = horizon.toFloat(),
+                onValueChange = { horizon = it.toInt().coerceIn(7, 365) },
+                valueRange = 7f..365f
+            )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(30 to "1M", 90 to "3M", 180 to "6M", 365 to "1Y").forEach { (days, label) ->
                     FilterChip(selected = horizon == days, onClick = { horizon = days }, label = { Text(label) })
