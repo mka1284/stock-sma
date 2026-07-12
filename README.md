@@ -10,7 +10,7 @@ No backend required: fetching, storage (Room), scheduling (WorkManager) and noti
 - **Per-instrument settings** — SMA window in days and a notification threshold in percent (0 % = notify on any crossing).
 - **SMA seed value** — if your data source provides no history, enter today's average manually as a starting point. It is blended into the calculation (`((window − n) × seed + sum of n real closes) / window`) and ignored automatically once the window is filled with real data. The detail screen shows whether the SMA is still seed-based.
 - **Notifications** — state the ticker, current price, SMA value, direction (above/below) and percentage distance. One notification per crossing event; re-armed when the price crosses back, or after an optional cooldown.
-- **Charts** — price line with the SMA overlaid, horizon switching (1M/3M/6M/1Y), colors adapt to the theme.
+- **Charts** — price line with the SMA overlaid, freely adjustable horizon (7–365 days via slider, with 1M/3M/6M/1Y quick presets), colors adapt to the theme.
 - **Adaptive UI** — list/detail side-by-side on tablets and wide screens, single-pane on phones.
 - **Themes** — Light, Dark, or follow the Android system setting (default). Applies immediately.
 
